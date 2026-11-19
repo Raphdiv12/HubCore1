@@ -1,0 +1,910 @@
+/* ============================================================
+   HUBCORE — Atelier Page Styles (atelier.css)
+   Scoped strictly to .page-atelier to guarantee zero side effects on Home.
+   Uses tokens and typography defined in style.css.
+   ============================================================ */
+
+/* ─── SCROLL CONTAINER & VIEWPORT SCOPING ───────────────── */
+.page-atelier {
+  --text-caption: var(--text-sm);
+  --text-body-wide: var(--text-lg);
+  --text-heading: var(--text-2xl);
+  --space-3xl: clamp(6rem, 4rem + 8vw, 12rem);
+  --nav-height: 80px;
+}
+
+html.page-atelier,
+body.page-atelier {
+  /* Use clip rather than hidden so position:sticky operates normally */
+  overflow-x: clip;
+}
+
+body.page-atelier {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-atelier main {
+  flex: 1;
+}
+
+/* Accessibility: Skip link */
+.page-atelier .skip-link {
+  position: absolute;
+  top: -100px;
+  left: var(--grid-margin);
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.5rem 1rem;
+  z-index: 1000;
+  text-decoration: none;
+  font-size: var(--text-caption);
+  transition: top 0.2s ease;
+}
+
+.page-atelier .skip-link:focus-visible {
+  top: 1rem;
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+/* Scoped Focus-visible */
+.page-atelier a:focus-visible,
+.page-atelier button:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 4px;
+}
+
+/* ─── SECTION 1: OPENING — ARCHITECTURAL SKETCHBOOK FOLIO ─ */
+#atelier-opening {
+  min-height: 55svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-top: calc(var(--nav-height) + var(--space-md));
+  padding-bottom: var(--space-xl);
+  position: relative;
+  overflow: visible;
+}
+
+.atelier-hero-grid {
+  align-items: flex-start;
+  row-gap: var(--space-lg);
+}
+
+/* Quiet Atelier Identifier Header */
+.atelier-header-line {
+  grid-column: 1 / -1;
+  padding-bottom: var(--space-sm);
+  margin-bottom: var(--space-xs);
+  border-bottom: 1px solid var(--rule);
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 1s var(--ease-smooth) 0.1s, transform 1s var(--ease-smooth) 0.1s;
+}
+
+.page-atelier.is-loaded .atelier-header-line {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.atelier-identifier {
+  font-family: var(--font-primary);
+  font-size: var(--text-caption);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-secondary);
+}
+
+/* Left column: Editorial Thesis (Cols 1-7) */
+.atelier-opening-col {
+  grid-column: 1 / 8;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+/* Architectural Display Scale — Distinct from Home's massive billboard */
+.atelier-opening-h1 {
+  font-size: clamp(2.4rem, 1.8rem + 2.4vw, 4rem);
+  font-weight: 300;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.atelier-opening-h1 .line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.16em;
+  margin-bottom: -0.16em;
+}
+
+.atelier-opening-h1 .line-inner {
+  display: block;
+  transform: translateY(125%);
+  transition: transform 1.2s var(--ease-smooth);
+}
+
+.page-atelier.is-loaded .atelier-opening-h1 .line-inner {
+  transform: translateY(0);
+}
+
+.page-atelier.is-loaded .atelier-opening-h1 .line:nth-child(2) .line-inner {
+  transition-delay: 0.14s;
+}
+
+.atelier-opening-sub {
+  font-size: var(--text-base);
+  line-height: 1.65;
+  color: var(--ink-secondary);
+  max-width: 44ch;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 1.2s var(--ease-smooth) 0.35s, transform 1.2s var(--ease-smooth) 0.35s;
+}
+
+.page-atelier.is-loaded .atelier-opening-sub {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Right column: Editorial Drawing Preface (Cols 8-12) */
+.atelier-study-preface-col {
+  grid-column: 8 / 13;
+  position: relative;
+  z-index: 2;
+  align-self: center;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 1.2s var(--ease-smooth) 0.4s, transform 1.2s var(--ease-smooth) 0.4s;
+}
+
+.page-atelier.is-loaded .atelier-study-preface-col {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.atelier-study-preface {
+  max-width: 32ch;
+  padding-left: var(--space-lg);
+  border-left: 1px solid var(--rule);
+}
+
+.study-preface-text {
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: var(--ink-secondary);
+}
+
+/* ─── SECTION 2: THE REDRAWN LINE (SIGNATURE INTERACTION) ─ */
+.atelier-signature-track {
+  position: relative;
+  height: 240vh; /* Smooth natural scroll track */
+  /* No margin: #atelier-craft already supplies section padding (avoids a doubled void) */
+}
+
+.atelier-signature-sticky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.signature-grid {
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+/* Left column: Text states (Cols 1-5 for comfortable line length) */
+.signature-text-col {
+  grid-column: 1 / 6;
+  position: relative;
+  /* All beats share one grid cell, so the column sizes to the tallest beat */
+  display: grid;
+  align-items: center;
+}
+
+.signature-state {
+  grid-area: 1 / 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.6s var(--ease-smooth), transform 0.6s var(--ease-smooth);
+  pointer-events: none;
+}
+
+.signature-state.is-active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.signature-state-num {
+  font-family: var(--font-primary);
+  font-size: var(--text-caption);
+  color: var(--ink-secondary);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-xs);
+}
+
+.signature-state-body {
+  font-size: clamp(1.1rem, 0.95rem + 0.6vw, 1.45rem);
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  max-width: 32ch;
+}
+
+/* Right column: Drawing stage (Cols 6-13) */
+.signature-drawing-col {
+  grid-column: 6 / -1;
+  position: relative;
+}
+
+.signature-figure {
+  margin: 0;
+  position: relative;
+  width: 100%;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+}
+
+.signature-layers-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+}
+
+.signature-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Scheme A: Forced attempt layer */
+.signature-layer-a {
+  opacity: var(--a-opacity, 1);
+  will-change: opacity;
+  z-index: 2;
+}
+
+/* Scheme B: Compass arc layer */
+.signature-layer-b {
+  z-index: 3;
+  -webkit-mask-image: radial-gradient(
+    circle at 50% 74.8%,
+    black var(--b-radius, 0%),
+    transparent calc(var(--b-radius, 0%) + 12%)
+  );
+  mask-image: radial-gradient(
+    circle at 50% 74.8%,
+    black var(--b-radius, 0%),
+    transparent calc(var(--b-radius, 0%) + 12%)
+  );
+  /* mask-image is not GPU-compositable; will-change omitted intentionally */
+}
+
+.signature-caption {
+  margin-top: var(--space-sm);
+  font-size: var(--text-caption);
+  color: var(--ink-secondary);
+  letter-spacing: 0.04em;
+  text-align: right;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.8s var(--ease-smooth), transform 0.8s var(--ease-smooth);
+}
+
+.signature-caption.is-visible {
+  opacity: 0.75;
+  transform: translateY(0);
+}
+
+/* ─── SECTION 3: STAYING WITH IT ────────────────────────── */
+#atelier-craft {
+  position: relative;
+  padding: var(--space-section) 0 calc(var(--space-section) * 0.75);
+}
+
+.staying-maker-col {
+  grid-column: 1 / 7;
+  position: relative;
+  align-self: center;
+}
+
+.staying-maker-wrap {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  position: relative;
+  overflow: hidden;
+}
+
+.staying-maker-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  mix-blend-mode: multiply;
+  -webkit-mask-image: var(--feather);
+  mask-image: var(--feather);
+}
+
+.staying-text-col {
+  grid-column: 8 / 13;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: center;
+}
+
+.staying-h2 {
+  font-size: var(--text-display);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-md);
+  color: var(--ink);
+}
+
+.staying-body {
+  font-size: var(--text-body-wide);
+  line-height: 1.65;
+  color: var(--ink-secondary);
+  margin-bottom: var(--space-lg);
+  max-width: 44ch;
+}
+
+.staying-note-wrap {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--rule);
+}
+
+.staying-annotation-mark {
+  width: 90px;
+  height: auto;
+  opacity: 0.55;
+  flex-shrink: 0;
+  mix-blend-mode: multiply;
+}
+
+.staying-note-text {
+  font-size: var(--text-caption);
+  line-height: 1.5;
+  color: var(--ink-secondary);
+  font-style: italic;
+  max-width: 34ch;
+}
+
+/* ─── SECTION 4: INVITATION ─────────────────────────────── */
+#atelier-invitation {
+  position: relative;
+  padding: var(--space-xl) 0 calc(var(--space-xl) + 2rem);
+}
+
+.invitation-transition-line {
+  grid-column: 1 / -1;
+  height: 1px;
+  background: var(--rule);
+  margin-bottom: var(--space-xl);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.2s var(--ease-smooth);
+}
+
+.invitation-transition-line.is-revealed {
+  transform: scaleX(1);
+}
+
+.invitation-col {
+  grid-column: 1 / 10;
+}
+
+.invitation-h2 {
+  font-size: var(--text-display);
+  font-weight: 300;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: var(--space-sm);
+}
+
+.invitation-subline {
+  font-size: var(--text-body-wide);
+  color: var(--ink-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--space-xl);
+  max-width: 48ch;
+}
+
+.invitation-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xl);
+  flex-wrap: wrap;
+}
+
+.invitation-cta {
+  font-size: var(--text-heading);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  text-decoration: none;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 4px;
+}
+
+.invitation-cta::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1.5px;
+  background: var(--ink);
+  transform: scaleX(0.2);
+  transform-origin: left;
+  transition: transform 0.6s var(--ease-smooth);
+}
+
+.invitation-cta:hover::after {
+  transform: scaleX(1);
+}
+
+.invitation-secondary {
+  font-size: var(--text-base);
+  color: var(--ink-secondary);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color 0.3s ease;
+}
+
+.invitation-secondary:hover {
+  color: var(--ink);
+}
+
+/* ─── REDUCED MOTION / NO-JS FALLBACK ───────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .atelier-signature-track {
+    height: auto;
+  }
+
+  .atelier-signature-sticky {
+    position: static;
+    height: auto;
+    padding: var(--space-xl) 0;
+  }
+
+  .signature-state {
+    grid-area: auto;
+    opacity: 1;
+    transform: none;
+    margin-bottom: var(--space-md);
+  }
+
+  .signature-layer-a {
+    opacity: 0.2;
+  }
+
+  .signature-layer-b {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .signature-caption {
+    opacity: 0.75;
+    transform: none;
+  }
+
+  .atelier-opening-h1 .line-inner,
+  .atelier-opening-sub,
+  .atelier-header-line,
+  .atelier-study-preface-col,
+  .invitation-transition-line {
+    transform: none !important;
+    opacity: 1 !important;
+    transition: none !important;
+  }
+}
+
+/* ─── FOOTER ────────────────────────────────────────────── */
+.page-atelier #footer {
+  border-top: 1px solid var(--rule);
+  padding: var(--space-xl) 0 var(--space-2xl);
+  font-size: var(--text-caption);
+  color: var(--ink-secondary);
+}
+
+.page-atelier .footer-grid {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: var(--space-lg);
+}
+
+.page-atelier .footer-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.page-atelier .footer-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.page-atelier .footer-link {
+  color: var(--ink-secondary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.page-atelier .footer-link:hover,
+.page-atelier .footer-link.is-active {
+  color: var(--ink);
+}
+
+/* Mobile nav: enlarge the hamburger hit area to ~44px without moving the bars */
+.page-atelier .nav-hamburger {
+  box-sizing: content-box;
+  padding: 15px 10px;
+  margin: -15px -10px;
+}
+
+html:not(.js) [data-reveal] {
+  opacity: 1;
+  transform: none;
+}
+
+html:not(.js) .atelier-signature-track {
+  height: auto;
+}
+
+html:not(.js) .atelier-signature-sticky {
+  position: static;
+  height: auto;
+}
+
+html:not(.js) .signature-state {
+  grid-area: auto;
+  opacity: 1;
+  transform: none;
+  margin-bottom: var(--space-md);
+}
+
+html:not(.js) .signature-layer-a {
+  opacity: 0.2;
+}
+
+html:not(.js) .signature-layer-b {
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+html:not(.js) .signature-caption {
+  opacity: 0.75;
+  transform: none;
+}
+
+html:not(.js) .atelier-opening-h1 .line-inner,
+html:not(.js) .atelier-opening-sub,
+html:not(.js) .atelier-header-line,
+html:not(.js) .atelier-study-preface-col,
+html:not(.js) .invitation-transition-line {
+  transform: none;
+  opacity: 1;
+}
+
+/* ─── RESPONSIVE ART DIRECTION: TABLET & MOBILE ─────────── */
+@media (max-width: 1024px) {
+  .atelier-opening-col { grid-column: 1 / 9; }
+  .atelier-study-preface-col { grid-column: 9 / 13; }
+  
+  .signature-text-col { grid-column: 1 / 6; }
+  .signature-drawing-col { grid-column: 6 / -1; }
+
+  .staying-maker-col { grid-column: 1 / 6; }
+  .staying-text-col { grid-column: 7 / 13; }
+}
+
+/* Tablet portrait & medium viewports */
+@media (max-width: 860px) {
+  #atelier-opening {
+    min-height: auto;
+    padding-top: calc(var(--nav-height) + var(--space-md));
+    padding-bottom: var(--space-lg);
+  }
+
+  .atelier-hero-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .atelier-header-line {
+    width: 100%;
+  }
+
+  .atelier-opening-col {
+    width: 100%;
+  }
+
+  /* Omit secondary preface on tablet & mobile: allows headline and drawing to command focus */
+  .atelier-study-preface-col {
+    display: none;
+  }
+
+  .atelier-opening-h1 {
+    font-size: clamp(2.2rem, 5.2vw, 3.2rem);
+    line-height: 1.15;
+  }
+
+  .atelier-opening-sub {
+    font-size: var(--text-base);
+    max-width: 50ch;
+  }
+
+  .atelier-signature-track {
+    height: 190vh;
+  }
+
+  .signature-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    align-items: center;
+  }
+
+  .signature-drawing-col {
+    width: 100%;
+    max-width: 580px;
+    order: 1;
+  }
+
+  .signature-text-col {
+    width: 100%;
+    max-width: 580px;
+    order: 2;
+  }
+
+  .signature-caption {
+    text-align: right;
+  }
+
+  .staying-maker-col {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  .staying-text-col {
+    grid-column: 1 / -1;
+    width: 100%;
+    margin-top: var(--space-lg);
+  }
+
+  .staying-body {
+    max-width: 54ch;
+  }
+
+  .invitation-col {
+    grid-column: 1 / -1;
+  }
+
+  .invitation-actions {
+    gap: var(--space-lg);
+  }
+
+  .page-atelier .footer-grid {
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .page-atelier .footer-nav {
+    gap: var(--space-sm) var(--space-md);
+  }
+}
+
+/* Mobile: iPhone 14/15/16 (390px) & iPhone SE (375px) */
+@media (max-width: 640px) {
+  #atelier-opening {
+    padding-top: calc(var(--nav-height) + var(--space-sm));
+    padding-bottom: var(--space-lg);
+  }
+
+  .atelier-opening-h1 {
+    font-size: clamp(1.85rem, 7.5vw, 2.35rem);
+    line-height: 1.18;
+  }
+
+  .atelier-opening-h1 .line {
+    overflow: visible;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .atelier-opening-h1 .line-inner {
+    display: inline;
+  }
+
+  .atelier-opening-sub {
+    font-size: var(--text-caption);
+    line-height: 1.6;
+    max-width: 100%;
+  }
+
+  .atelier-signature-track {
+    height: 180vh;
+  }
+
+  .atelier-signature-sticky {
+    height: 100svh;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .signature-grid {
+    gap: var(--space-sm);
+  }
+
+  /* Let the signature drawing use the full phone measure — it is the page's centrepiece */
+  .signature-drawing-col {
+    width: 100%;
+    max-width: none;
+  }
+
+  .signature-text-col {
+    width: 100%;
+    max-width: none;
+    margin-top: 0;
+  }
+
+  .signature-state-num {
+    font-size: var(--text-xs);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.25rem;
+  }
+
+  .signature-state-body {
+    font-size: clamp(1.05rem, 4.2vw, 1.2rem);
+    line-height: 1.45;
+  }
+
+  .signature-caption {
+    font-size: var(--text-xs);
+    margin-top: 0.25rem;
+    text-align: right;
+  }
+
+  .staying-h2 {
+    font-size: clamp(1.85rem, 6.5vw, 2.35rem);
+    line-height: 1.15;
+    margin-bottom: var(--space-xs);
+  }
+
+  .staying-body {
+    font-size: var(--text-caption);
+    line-height: 1.6;
+    margin-bottom: var(--space-md);
+  }
+
+  /* Omit decorative measurement annotation graphic on phone to give text ample room */
+  .staying-annotation-mark {
+    display: none;
+  }
+
+  .staying-note-wrap {
+    border-top: none;
+    border-left: 2px solid var(--rule-strong);
+    padding-top: 0;
+    padding-left: var(--space-md);
+    margin-top: var(--space-sm);
+  }
+
+  .staying-note-text {
+    font-size: var(--text-xs);
+    line-height: 1.5;
+    font-style: italic;
+    max-width: none;
+  }
+
+  .invitation-h2 {
+    font-size: clamp(1.85rem, 6.5vw, 2.35rem);
+    line-height: 1.15;
+  }
+
+  .invitation-subline {
+    font-size: var(--text-caption);
+    line-height: 1.6;
+    margin-bottom: var(--space-lg);
+  }
+
+  .invitation-actions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-md);
+  }
+
+  .invitation-cta {
+    font-size: clamp(1.2rem, 5.5vw, 1.6rem);
+    overflow-wrap: anywhere;
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .invitation-secondary {
+    font-size: var(--text-caption);
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .page-atelier #footer {
+    padding: var(--space-lg) 0 var(--space-xl);
+  }
+
+  .page-atelier .footer-link {
+    font-size: var(--text-xs);
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .page-atelier .footer-copy,
+  .page-atelier .footer-colophon {
+    font-size: var(--text-xs);
+  }
+}
+
+/* Short landscape viewports (phones on their side): stacked stage cannot fit 100svh,
+   so drawing and notes sit side by side again, drawing sized by height. */
+@media (max-width: 1024px) and (max-height: 560px) and (orientation: landscape) {
+  .signature-grid {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .signature-drawing-col {
+    order: 2;
+    flex: 0 1 auto;
+    width: min(56%, calc((100svh - 5rem) * 1.5));
+    max-width: none;
+  }
+
+  .signature-text-col {
+    order: 1;
+    flex: 1 1 0;
+    max-width: none;
+  }
+}

@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HubCore Atelier & Works Integration Verification</title>
+  <link rel="stylesheet" href="./signature.css">
+  <style>
+    :root {
+      --ink: #1a1a1a;
+      --ink-secondary: #4a4a4a;
+      --ink-tertiary: #7a7a7a;
+      --paper: #f5f2ed;
+      --font-serif: "Instrument Serif", Georgia, serif;
+      --font-sans: "ABC Favorit", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      padding: 40px 24px;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+    .test-card {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    /* Atelier target styles replicate atelier.css */
+    .staying-h2 {
+      font-family: var(--font-serif);
+      font-size: clamp(36px, 4vw, 56px);
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin: 0 0 16px;
+      color: var(--ink);
+    }
+    /* Works target styles replicate works.css */
+    .plate-title {
+      font-family: var(--font-sans);
+      font-size: clamp(28px, 3.2vw, 44px);
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin: 0 0 8px;
+      color: var(--ink);
+    }
+    #log {
+      margin-top: 24px;
+      padding: 16px;
+      background: #1a1a1a;
+      color: #e6e6e6;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 13px;
+      white-space: pre-wrap;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Atelier & Works Integration Verification Suite</h1>
+    <p>Validates contour typography signature instances on both pages: initialization, independent triggers, activation, reset, and re-arm behavior.</p>
+
+    <!-- Atelier Mock Mount -->
+    <div class="test-card" id="card-atelier">
+      <div class="label" style="font-size:11px; text-transform:uppercase; color:var(--ink-tertiary); margin-bottom:8px;">Atelier Target (.staying-h2)</div>
+      <h2 class="staying-h2" id="test-atelier-target" data-signature-type>Staying with it</h2>
+    </div>
+
+    <!-- Works Mock Mount -->
+    <div class="test-card" id="card-works">
+      <div class="label" style="font-size:11px; text-transform:uppercase; color:var(--ink-tertiary); margin-bottom:8px;">Works Target (#becoming-title)</div>
+      <h2 class="plate-title" id="test-works-target" data-signature-type>Becoming</h2>
+    </div>
+
+    <div id="log">Running tests...</div>
+  </div>
+
+  <script type="module">
+    import { createSignature } from './signature.js';
+
+    const logEl = document.getElementById('log');
+    const logs = [];
+    function pass(msg) { logs.push('PASS  ' + msg); }
+    function fail(msg) { logs.push('FAIL  ' + msg); }
+
+    const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+
+    async function runTests() {
+      try {
+        const elAtelier = document.getElementById('test-atelier-target');
+        const elWorks = document.getElementById('test-works-target');
+
+        // Test 1: Instantiate Atelier signature
+        const sigAtelier = createSignature('type', elAtelier, { treatment: 'contour' });
+        if (sigAtelier && sigAtelier.state === 'idle') {
+          pass('Atelier signature instance created and initialized in idle state');
+        } else {
+          fail('Atelier signature creation failed');
+        }
+
+        // Test 2: Instantiate Works signature
+        const sigWorks = createSignature('type', elWorks, { treatment: 'contour' });
+        if (sigWorks && sigWorks.state === 'idle') {
+          pass('Works signature instance created and initialized in idle state');
+        } else {
+          fail('Works signature creation failed');
+        }
+
+        // Test 3: Contour DOM structure on Atelier
+        const chAtelier = elAtelier.querySelector('.type__channels--contour');
+        const contoursAtelier = elAtelier.querySelectorAll('.type__contour');
+        if (chAtelier && contoursAtelier.length === 2 && chAtelier.getAttribute('aria-hidden') === 'true') {
+          pass('Atelier contour DOM contains exactly 2 contour layers with aria-hidden="true"');
+        } else {
+          fail('Atelier contour DOM structure mismatch');
+        }
+
+        // Test 4: Contour DOM structure on Works
+        const chWorks = elWorks.querySelector('.type__channels--contour');
+        const contoursWorks = elWorks.querySelectorAll('.type__contour');
+        if (chWorks && contoursWorks.length === 2 && chWorks.getAttribute('aria-hidden') === 'true') {
+          pass('Works contour DOM contains exactly 2 contour layers with aria-hidden="true"');
+        } else {
+          fail('Works contour DOM structure mismatch');
+        }
+
+        // Test 5: CSS Stroke styling verification
+        const c0Style = window.getComputedStyle(contoursAtelier[0]);
+        const strokeWidth = c0Style.webkitTextStrokeWidth;
+        const color = c0Style.color;
+        if ((strokeWidth === '1.5px' || strokeWidth === '1px') && (color === 'rgba(0, 0, 0, 0)' || color === 'transparent')) {
+          pass('Contour layers have visible ' + strokeWidth + ' stroke and transparent fill (crisp architectural registration)');
+        } else {
+          fail('Contour stroke styling mismatch: width=' + strokeWidth + ', color=' + color);
+        }
+
+        // Test 6: Independence - Trigger Atelier only
+        const playedAtelier = sigAtelier.play();
+        if (playedAtelier && sigAtelier.state === 'running' && elAtelier.classList.contains('is-active')) {
+          pass('Atelier play() transitions to running state and adds is-active');
+        } else {
+          fail('Atelier play() failed to activate');
+        }
+
+        if (sigWorks.state === 'idle' && !elWorks.classList.contains('is-active') && sigWorks.activations === 0) {
+          pass('Independence verified: Atelier activation does NOT affect Works instance');
+        } else {
+          fail('Independence failed: Works instance was affected by Atelier activation');
+        }
+
+        // Wait for Atelier animation to complete (~620ms duration)
+        await wait(750);
+
+        // Test 7: Atelier clean reset
+        if (sigAtelier.state === 'idle' && !elAtelier.classList.contains('is-active')) {
+          pass('Atelier animation completed cleanly and returned to pristine idle state');
+        } else {
+          fail('Atelier failed to return to idle after completion: state=' + sigAtelier.state);
+        }
+
+        // Test 8: Independence - Trigger Works only
+        const playedWorks = sigWorks.play();
+        if (playedWorks && sigWorks.state === 'running' && elWorks.classList.contains('is-active')) {
+          pass('Works play() transitions to running state and adds is-active');
+        } else {
+          fail('Works play() failed to activate');
+        }
+
+        if (sigAtelier.state === 'idle' && !elAtelier.classList.contains('is-active') && sigAtelier.activations === 1) {
+          pass('Independence verified: Works activation does NOT affect Atelier instance');
+        } else {
+          fail('Independence failed: Atelier instance was affected by Works activation');
+        }
+
+        // Wait for Works animation to complete
+        await wait(750);
+
+        // Test 9: Works clean reset
+        if (sigWorks.state === 'idle' && !elWorks.classList.contains('is-active')) {
+          pass('Works animation completed cleanly and returned to pristine idle state');
+        } else {
+          fail('Works failed to return to idle after completion: state=' + sigWorks.state);
+        }
+
+        // Test 10: Inline style cleanup check
+        const atChStyle = chAtelier.style.transform;
+        const wkChStyle = chWorks.style.transform;
+        if (!atChStyle && !wkChStyle) {
+          pass('Inline transforms cleaned up completely after animation reset');
+        } else {
+          fail('Stray transforms remain after reset');
+        }
+
+        // Test 11: Re-arm verification
+        sigAtelier.reset(); // simulate re-arming
+        const replayed = sigAtelier.play();
+        if (replayed && sigAtelier.state === 'running') {
+          pass('Instance can be re-triggered cleanly for repeat scroll encounters');
+        } else {
+          fail('Instance failed to re-trigger after reset');
+        }
+        await wait(750);
+
+        // Test 12: Mobile responsive bounding check
+        const atRect = elAtelier.getBoundingClientRect();
+        const wkRect = elWorks.getBoundingClientRect();
+        if (atRect.width > 0 && atRect.height > 0 && wkRect.width > 0 && wkRect.height > 0) {
+          pass('Both elements render valid non-zero bounding boxes without layout collapse');
+        } else {
+          fail('Bounding box collapsed');
+        }
+
+        const totalPasses = logs.filter(l => l.startsWith('PASS')).length;
+        const totalFails = logs.filter(l => l.startsWith('FAIL')).length;
+
+        logs.push('');
+        if (totalFails === 0) {
+          logs.push(`ALL CHECKS PASSED (${totalPasses}/${totalPasses})`);
+        } else {
+          logs.push(`${totalFails} FAILURES (${totalPasses}/${totalPasses + totalFails})`);
+        }
+      } catch (err) {
+        fail('Exception in test suite: ' + err.message + '\n' + err.stack);
+      } finally {
+        logEl.textContent = logs.join('\n');
+      }
+    }
+
+    runTests();
+  </script>
+</body>
+</html>
+

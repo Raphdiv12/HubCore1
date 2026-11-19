@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <!-- Placeholder test image: high-contrast edges and saturated colour make channel separation easy to judge. -->
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#16181d"/>
+      <stop offset="1" stop-color="#262a33"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ff5a36"/>
+      <stop offset="0.7" stop-color="#e2361b"/>
+      <stop offset="1" stop-color="#a81f10"/>
+    </radialGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#ffffff" stroke-opacity="0.06" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="800" fill="url(#sky)"/>
+  <rect width="1200" height="800" fill="url(#grid)"/>
+  <circle cx="700" cy="380" r="210" fill="url(#glow)"/>
+  <circle cx="560" cy="420" r="250" fill="none" stroke="#f4f1ea" stroke-width="14"/>
+  <rect x="120" y="560" width="960" height="6" fill="#f4f1ea"/>
+  <rect x="120" y="590" width="620" height="2" fill="#f4f1ea" opacity="0.6"/>
+  <rect x="860" y="120" width="220" height="140" fill="#2f6bff"/>
+  <rect x="884" y="144" width="172" height="92" fill="none" stroke="#f4f1ea" stroke-width="4"/>
+  <g fill="#f4f1ea" font-family="Helvetica, Arial, sans-serif" font-weight="700">
+    <text x="120" y="190" font-size="96" letter-spacing="-2">HUBCORE</text>
+    <text x="122" y="236" font-size="22" letter-spacing="8" font-weight="400" opacity="0.8">SIGNATURE / 01</text>
+    <text x="120" y="680" font-size="18" letter-spacing="6" font-weight="400" opacity="0.7">STATE A — STATE B</text>
+  </g>
+</svg>
+

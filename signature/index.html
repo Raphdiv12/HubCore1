@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HubCore · Signature Interaction System</title>
+  <link rel="stylesheet" href="./signature.css">
+  <style>
+    :root {
+      --bg: #f5f2ed;
+      --paper-warm: #ede8e0;
+      --ink: #1a1a1a;
+      --ink-secondary: #4a4a4a;
+      --ink-tertiary: #7a7a7a;
+      --rule: rgba(26, 26, 26, 0.12);
+      --font-serif: "ABC Favorit", "Suisse Intl", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font: 15px/1.6 var(--font-serif);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 6vw;
+    }
+
+    /* Header */
+    header.hero {
+      min-height: 70vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding-bottom: 8vh;
+      border-bottom: 1px solid var(--rule);
+    }
+    .eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-tertiary);
+      margin: 0 0 1rem;
+    }
+    h1.hero-title {
+      position: relative;
+      display: inline-block;
+      font-size: clamp(48px, 9vw, 104px);
+      font-weight: 700;
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      margin: 0 0 1.5rem;
+    }
+    p.lead {
+      font-size: 16px;
+      color: var(--ink-secondary);
+      max-width: 42rem;
+      margin: 0;
+    }
+
+    /* Section */
+    section.showcase {
+      padding: 18vh 0 12vh;
+      border-bottom: 1px solid var(--rule);
+    }
+    .stage-header {
+      margin-bottom: 3rem;
+    }
+    .stage-title {
+      font-size: 24px;
+      font-weight: 600;
+      margin: 0 0 0.5rem;
+      letter-spacing: -0.02em;
+    }
+    .stage-note {
+      font-size: 14px;
+      color: var(--ink-secondary);
+      margin: 0;
+      max-width: 36rem;
+    }
+
+    /* Presentation cards */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 4rem;
+    }
+    @media (min-width: 768px) {
+      .grid--2col {
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+      }
+    }
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .card-label {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-tertiary);
+      font-weight: 600;
+    }
+
+    /* Image frames */
+    .sig {
+      margin: 0;
+      width: 100%;
+    }
+    .sig__frame {
+      aspect-ratio: 3 / 2;
+      border-radius: 2px;
+    }
+
+    /* Typography display */
+    .type-display {
+      position: relative;
+      display: inline-block;
+      font-size: clamp(38px, 6vw, 68px);
+      font-weight: 700;
+      line-height: 0.95;
+      letter-spacing: -0.035em;
+      margin: 0;
+    }
+
+    /* Graphic form */
+    .form {
+      margin: 0;
+      width: 100%;
+    }
+    .form__svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 3 / 2;
+    }
+
+    /* Trigger and feedback */
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 0.5rem;
+    }
+    .btn {
+      font: inherit;
+      font-weight: 600;
+      font-size: 13px;
+      padding: 7px 14px;
+      background: var(--ink);
+      color: #fff;
+      border: 0;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: opacity 120ms;
+    }
+    .btn:disabled {
+      opacity: 0.4;
+      cursor: default;
+    }
+    .meta-status {
+      font-size: 12px;
+      color: var(--ink-tertiary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Fixed Activation Zone Guideline (visual hint) */
+    .guide-zone {
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 30%;
+      bottom: 30%;
+      border-top: 1px dashed rgba(26, 26, 26, 0.15);
+      border-bottom: 1px dashed rgba(26, 26, 26, 0.15);
+      pointer-events: none;
+      z-index: 100;
+    }
+    .guide-zone::after {
+      content: "30% - 70% Viewport Activation Zone";
+      position: absolute;
+      right: 16px;
+      top: 6px;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-tertiary);
+    }
+
+    /* Footer */
+    footer {
+      padding: 12vh 0 16vh;
+    }
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      font-size: 13px;
+    }
+    .footer-links a {
+      color: var(--ink);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="guide-zone" aria-hidden="true"></div>
+
+  <div class="container">
+
+    <!-- ─── HERO ─────────────────────────────────────────────── -->
+    <header class="hero">
+      <p class="eyebrow">HubCore · Standalone Signature Prototype</p>
+      <h1 class="hero-title" data-hero-title>Between<br>states.</h1>
+      <p class="lead">
+        The signature interaction: controlled stepped displacement, subtle micro-jitter, and instant realignment.
+        Scroll elements through the activation zone or use the trigger controls.
+      </p>
+      <div class="controls" style="margin-top: 1.5rem;">
+        <button class="btn" id="btn-hero">Trigger Hero</button>
+        <span class="meta-status" id="status-hero">idle · 0 activations</span>
+      </div>
+    </header>
+
+
+    <!-- ─── 1. IMAGERY: GRAPHITE vs CHROMATIC ────────────────── -->
+    <section class="showcase">
+      <div class="stage-header">
+        <h2 class="stage-title">1. Imagery Expressions</h2>
+        <p class="stage-note">
+          <strong>Graphite</strong> displaces tactile offset layers over light paper without a black frame.
+          <strong>Chromatic</strong> maintains full optical RGB separation screen-blended over black.
+        </p>
+      </div>
+
+      <div class="grid grid--2col">
+        <!-- Graphite Image -->
+        <div class="card">
+          <span class="card-label">Graphite Echo (No Black Box Required)</span>
+          <figure class="sig" id="sig-img-graphite">
+            <div class="sig__frame">
+              <img class="sig__img" src="./graphite-construction.png" alt="Graphite construction mark">
+            </div>
+          </figure>
+          <div class="controls">
+            <button class="btn" id="btn-img-graphite">Trigger</button>
+            <span class="meta-status" id="status-img-graphite">idle</span>
+          </div>
+        </div>
+
+        <!-- Tonal Image -->
+        <div class="card">
+          <span class="card-label">Tonal (Terracotta / Slate Separation)</span>
+          <figure class="sig" id="sig-img-tonal">
+            <div class="sig__frame">
+              <img class="sig__img" src="./graphite-construction.png" alt="Graphite construction mark">
+            </div>
+          </figure>
+          <div class="controls">
+            <button class="btn" id="btn-img-tonal">Trigger</button>
+            <span class="meta-status" id="status-img-tonal">idle</span>
+          </div>
+        </div>
+
+        <!-- Chromatic Image -->
+        <div class="card">
+          <span class="card-label">Chromatic RGB (Screen-blend over Black)</span>
+          <figure class="sig" id="sig-img-chromatic">
+            <div class="sig__frame">
+              <img class="sig__img" src="./image.svg" alt="Abstract composition">
+            </div>
+          </figure>
+          <div class="controls">
+            <button class="btn" id="btn-img-chromatic">Trigger</button>
+            <span class="meta-status" id="status-img-chromatic">idle</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ─── 2. TYPOGRAPHY: CONTOUR & TONAL ───────────────────── -->
+    <section class="showcase">
+      <div class="stage-header">
+        <h2 class="stage-title">2. Typography Expressions</h2>
+        <p class="stage-note">
+          <strong>Contour</strong> steps 1px architectural registration outlines around solid letterforms.
+          <strong>Tonal</strong> separates warm terracotta and cool slate duotone echoes.
+        </p>
+      </div>
+
+      <div class="grid grid--2col">
+        <!-- Contour Typography -->
+        <div class="card">
+          <span class="card-label">Contour (1px Drafting Outlines)</span>
+          <div style="min-height: 140px; display: flex; align-items: center;">
+            <h3 class="type-display" id="sig-type-contour">Craft in<br>Motion.</h3>
+          </div>
+          <div class="controls">
+            <button class="btn" id="btn-type-contour">Trigger</button>
+            <span class="meta-status" id="status-type-contour">idle</span>
+          </div>
+        </div>
+
+        <!-- Tonal Typography -->
+        <div class="card">
+          <span class="card-label">Tonal (Terracotta & Slate Duotone)</span>
+          <div style="min-height: 140px; display: flex; align-items: center;">
+            <h3 class="type-display" id="sig-type-tonal">Quiet at<br>rest.</h3>
+          </div>
+          <div class="controls">
+            <button class="btn" id="btn-type-tonal">Trigger</button>
+            <span class="meta-status" id="status-type-tonal">idle</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ─── 3. GRAPHIC FORM (VECTOR SVG) ─────────────────────── -->
+    <section class="showcase">
+      <div class="stage-header">
+        <h2 class="stage-title">3. Graphic Form Expressions</h2>
+        <p class="stage-note">
+          Inline SVG architectural elevation. Works with subtle vector graphite echoes or exact channel recolouring.
+        </p>
+      </div>
+
+      <div class="grid grid--2col">
+        <div class="card">
+          <span class="card-label">Architectural Drawing · Graphite</span>
+          <figure class="form" id="sig-form-graphite">
+            <svg class="form__svg" viewBox="0 0 1200 800" role="img" aria-label="Elevation plan">
+              <g class="form__art">
+                <rect x="-80" y="-80" width="1360" height="960" fill="#ede8e0"/>
+                <path d="M140 640 A470 470 0 0 1 1080 640" fill="none" stroke="#a9b2bc" stroke-width="2" stroke-dasharray="6 10"/>
+                <polygon points="620,640 900,640 1010,700 730,700" fill="#d9d4cb"/>
+                <line x1="90" y1="640" x2="1110" y2="640" stroke="#1d1f24" stroke-width="3"/>
+                <rect x="310" y="210" width="310" height="430" fill="#d6d1c7" stroke="#1d1f24" stroke-width="4"/>
+                <path d="M385 640 V440 A80 80 0 0 1 545 440 V640 Z" fill="#b5532f" stroke="#1d1f24" stroke-width="4"/>
+                <path d="M620 640 V430 A140 140 0 0 1 900 430 V640 Z" fill="#c3ccd5" stroke="#1d1f24" stroke-width="4"/>
+                <circle cx="880" cy="220" r="54" fill="#b5532f"/>
+              </g>
+            </svg>
+          </figure>
+          <div class="controls">
+            <button class="btn" id="btn-form-graphite">Trigger</button>
+            <span class="meta-status" id="status-form-graphite">idle</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <span class="card-label">Architectural Drawing · Tonal (Terracotta / Slate)</span>
+          <figure class="form" id="sig-form-tonal">
+            <svg class="form__svg" viewBox="0 0 1200 800" role="img" aria-label="Elevation plan">
+              <g class="form__art">
+                <rect x="-80" y="-80" width="1360" height="960" fill="#ede8e0"/>
+                <path d="M140 640 A470 470 0 0 1 1080 640" fill="none" stroke="#a9b2bc" stroke-width="2" stroke-dasharray="6 10"/>
+                <polygon points="620,640 900,640 1010,700 730,700" fill="#d9d4cb"/>
+                <line x1="90" y1="640" x2="1110" y2="640" stroke="#1d1f24" stroke-width="3"/>
+                <rect x="310" y="210" width="310" height="430" fill="#d6d1c7" stroke="#1d1f24" stroke-width="4"/>
+                <path d="M385 640 V440 A80 80 0 0 1 545 440 V640 Z" fill="#b5532f" stroke="#1d1f24" stroke-width="4"/>
+                <path d="M620 640 V430 A140 140 0 0 1 900 430 V640 Z" fill="#c3ccd5" stroke="#1d1f24" stroke-width="4"/>
+                <circle cx="880" cy="220" r="54" fill="#b5532f"/>
+              </g>
+            </svg>
+          </figure>
+          <div class="controls">
+            <button class="btn" id="btn-form-tonal">Trigger</button>
+            <span class="meta-status" id="status-form-tonal">idle</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <span class="card-label">Architectural Drawing · Chromatic</span>
+          <figure class="form" id="sig-form-chromatic">
+            <svg class="form__svg" viewBox="0 0 1200 800" role="img" aria-label="Elevation plan">
+              <g class="form__art">
+                <rect x="-80" y="-80" width="1360" height="960" fill="#ede8e0"/>
+                <path d="M140 640 A470 470 0 0 1 1080 640" fill="none" stroke="#a9b2bc" stroke-width="2" stroke-dasharray="6 10"/>
+                <polygon points="620,640 900,640 1010,700 730,700" fill="#d9d4cb"/>
+                <line x1="90" y1="640" x2="1110" y2="640" stroke="#1d1f24" stroke-width="3"/>
+                <rect x="310" y="210" width="310" height="430" fill="#d6d1c7" stroke="#1d1f24" stroke-width="4"/>
+                <path d="M385 640 V440 A80 80 0 0 1 545 440 V640 Z" fill="#b5532f" stroke="#1d1f24" stroke-width="4"/>
+                <path d="M620 640 V430 A140 140 0 0 1 900 430 V640 Z" fill="#c3ccd5" stroke="#1d1f24" stroke-width="4"/>
+                <circle cx="880" cy="220" r="54" fill="#b5532f"/>
+              </g>
+            </svg>
+          </figure>
+          <div class="controls">
+            <button class="btn" id="btn-form-chromatic">Trigger</button>
+            <span class="meta-status" id="status-form-chromatic">idle</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── FOOTER ───────────────────────────────────────────── -->
+    <footer>
+      <div class="footer-links">
+        <a href="./test.html">Open Automated Verification Suite (test.html)</a>
+        <a href="./USAGE.md">View Documentation (USAGE.md)</a>
+      </div>
+    </footer>
+
+  </div>
+
+  <script type="module">
+    import { createSignature } from './signature.js';
+
+    const items = [
+      { id: 'hero', mode: 'type', selector: '[data-hero-title]', opts: { treatment: 'graphite' } },
+      { id: 'img-graphite', mode: 'image', selector: '#sig-img-graphite', opts: { treatment: 'graphite' } },
+      { id: 'img-tonal', mode: 'image', selector: '#sig-img-tonal', opts: { treatment: 'tonal' } },
+      { id: 'img-chromatic', mode: 'image', selector: '#sig-img-chromatic', opts: { treatment: 'chromatic' } },
+      { id: 'type-contour', mode: 'type', selector: '#sig-type-contour', opts: { treatment: 'contour' } },
+      { id: 'type-tonal', mode: 'type', selector: '#sig-type-tonal', opts: { treatment: 'tonal' } },
+      { id: 'form-graphite', mode: 'form', selector: '#sig-form-graphite', opts: { treatment: 'graphite' } },
+      { id: 'form-tonal', mode: 'form', selector: '#sig-form-tonal', opts: { treatment: 'tonal' } },
+      { id: 'form-chromatic', mode: 'form', selector: '#sig-form-chromatic', opts: { treatment: 'chromatic' } },
+    ];
+
+    const instances = {};
+
+    items.forEach(({ id, mode, selector, opts }) => {
+      const inst = createSignature(mode, selector, opts);
+      if (!inst) return;
+      instances[id] = inst;
+
+      const btn = document.getElementById(`btn-${id}`);
+      const status = document.getElementById(`status-${id}`);
+
+      if (btn) {
+        btn.addEventListener('click', () => inst.play());
+      }
+
+      setInterval(() => {
+        if (status) {
+          status.textContent = `${inst.state} · ${inst.activations} activation${inst.activations === 1 ? '' : 's'}`;
+          if (btn) btn.disabled = inst.state === 'running';
+        }
+      }, 80);
+    });
+  </script>
+</body>
+</html>
+

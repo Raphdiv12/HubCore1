@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en" class="page-works">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Works · HubCore</title>
+  <meta name="description" content="Works by HubCore: HAMZA, KukuChow, Road to the Cross, Becoming, and NORIC.">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/works.css">
+  <link rel="stylesheet" href="/signature/signature.css">
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◯</text></svg>">
+</head>
+
+<body class="page-works">
+
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <!-- ═══════════════════════════════════════════════
+       NAVIGATION — Static on load, active Work state
+       ═══════════════════════════════════════════════ -->
+  <nav id="nav" class="is-visible" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="/" class="nav-wordmark" id="nav-wordmark">HubCore</a>
+      <ul class="nav-links">
+        <li><a href="/works/" class="nav-link is-active" id="nav-work" aria-current="page">Work</a></li>
+        <li><a href="/atelier/" class="nav-link" id="nav-atelier">Atelier</a></li>
+        <li><a href="/contact/" class="nav-link" id="nav-contact">Contact</a></li>
+      </ul>
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu" aria-expanded="false"
+        aria-controls="nav-overlay">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+    </div>
+    <div class="nav-overlay" id="nav-overlay">
+      <a href="/works/" class="overlay-link" aria-current="page">Work</a>
+      <a href="/atelier/" class="overlay-link">Atelier</a>
+      <a href="/contact/" class="overlay-link">Contact</a>
+    </div>
+  </nav>
+
+  <main id="main">
+
+    <!-- ═══════════════════════════════════════════════
+         OPENING — Title wall + floor plan index
+         ═══════════════════════════════════════════════ -->
+    <header id="works-opening" class="works-opening">
+      <div class="grid works-opening-grid">
+        <div class="works-header-line">
+          <span class="works-identifier">HUBCORE WORKS</span>
+        </div>
+
+        <h1 class="works-h1">
+          <span class="line"><span class="line-inner">Five works,</span></span>
+          <span class="line"><span class="line-inner">as they stand.</span></span>
+        </h1>
+
+        <nav class="works-index" aria-label="Works index">
+          <ol class="works-index-list">
+            <li><a href="#work-hamza" class="works-index-link"><span class="wi-num">01</span><span
+                  class="wi-name">HAMZA</span></a></li>
+            <li><a href="#work-kukuchow" class="works-index-link"><span class="wi-num">02</span><span
+                  class="wi-name">KukuChow</span></a></li>
+            <li><a href="#work-rttc" class="works-index-link"><span class="wi-num">03</span><span class="wi-name">Road
+                  to the Cross</span></a></li>
+            <li><a href="#work-becoming" class="works-index-link"><span class="wi-num">04</span><span
+                  class="wi-name">Becoming</span></a></li>
+            <li><a href="#work-noric" class="works-index-link"><span class="wi-num">05</span><span
+                  class="wi-name">NORIC</span></a></li>
+          </ol>
+        </nav>
+      </div>
+    </header>
+
+    <!--
+      ASSET SLOTS
+      Each .plate-media holds an art-directed composition (.plate-art).
+      To introduce real imagery later, add an element with class "plate-asset"
+      inside the same .plate-media, e.g.
+        <img class="plate-asset" src="/works/hamza-01.webp" alt="…" width="…" height="…" loading="lazy">
+        <video class="plate-asset" src="/works/rttc.mp4" muted loop playsinline preload="none"></video>
+      The composition hides automatically (see works.css → "Asset slots").
+    -->
+
+    <!-- ═══════════════════════════════════════════════
+         01 — HAMZA · Cinematic manga plate (dark, wide)
+         ═══════════════════════════════════════════════ -->
+    <article id="work-hamza" class="plate plate-hamza" aria-labelledby="hamza-title">
+      <div class="grid plate-grid">
+        <div class="plate-media" data-reveal data-asset-slot="hamza">
+          <div class="plate-art art-hamza" aria-hidden="true">
+            <div class="hz-panel hz-p1">
+              <span class="hz-speed"></span>
+              <span class="hz-eye"><span class="hz-iris"></span></span>
+            </div>
+            <div class="hz-panel hz-p2">
+              <span class="hz-tone"></span>
+              <span class="hz-kanji">五条悟</span>
+            </div>
+            <div class="hz-panel hz-p3">
+              <span class="hz-title">HAMZA</span>
+            </div>
+            <div class="hz-panel hz-p4">
+              <span class="hz-tone hz-tone-dense"></span>
+              <span class="hz-blindfold"></span>
+            </div>
+            <span class="hz-scroll" aria-hidden="true"></span>
+          </div>
+        </div>
+
+        <div class="plate-label" data-reveal data-reveal-delay="1">
+          <span class="plate-num">01</span>
+          <h2 class="plate-title" id="hamza-title">HAMZA</h2>
+          <p class="plate-line">A cinematic, anime-inspired web experience centred on Satoru Gojo.</p>
+          <p class="plate-note">Conceived around manga-influenced composition and scroll-driven storytelling.</p>
+          <p class="plate-discipline">Web experience</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- ═══════════════════════════════════════════════
+         02 — KukuChow · Brand / graphic / product sheet
+         ═══════════════════════════════════════════════ -->
+    <article id="work-kukuchow" class="plate plate-kukuchow" aria-labelledby="kukuchow-title">
+      <div class="grid plate-grid">
+        <div class="plate-label" data-reveal data-reveal-delay="1">
+          <span class="plate-num">02</span>
+          <h2 class="plate-title" id="kukuchow-title">KukuChow</h2>
+          <p class="plate-line">A campus commerce and logistics product.</p>
+          <p class="plate-discipline">Branding · Graphic design · Digital product</p>
+        </div>
+
+        <div class="plate-media" data-reveal data-asset-slot="kukuchow">
+          <div class="plate-art art-kukuchow" aria-hidden="true">
+            <div class="kc-cell kc-mark">
+              <span class="kc-word">Kuku<br>Chow</span>
+            </div>
+            <div class="kc-cell kc-route">
+              <svg class="kc-route-svg" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet" focusable="false">
+                <g class="kc-grid-lines">
+                  <line x1="0" y1="75" x2="400" y2="75" />
+                  <line x1="0" y1="150" x2="400" y2="150" />
+                  <line x1="0" y1="225" x2="400" y2="225" />
+                  <line x1="100" y1="0" x2="100" y2="300" />
+                  <line x1="200" y1="0" x2="200" y2="300" />
+                  <line x1="300" y1="0" x2="300" y2="300" />
+                </g>
+                <path class="kc-path" d="M40 250 L100 250 L100 150 L200 150 L200 75 L300 75 L300 150 L360 150"
+                  pathLength="1" />
+                <circle class="kc-node" cx="40" cy="250" r="7" />
+                <circle class="kc-node kc-node-mid" cx="200" cy="150" r="5" />
+                <circle class="kc-node kc-node-end" cx="360" cy="150" r="10" />
+              </svg>
+            </div>
+            <div class="kc-cell kc-spec">
+              <span class="kc-aa">Aa</span>
+            </div>
+            <div class="kc-cell kc-system">
+              <span class="kc-sq"></span><span class="kc-sq"></span><span class="kc-sq"></span>
+              <span class="kc-sq"></span><span class="kc-sq kc-sq-fill"></span><span class="kc-sq"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ═══════════════════════════════════════════════
+         03 — Road to the Cross · Chiaroscuro canvas (tall)
+         ═══════════════════════════════════════════════ -->
+    <article id="work-rttc" class="plate plate-rttc" aria-labelledby="rttc-title">
+      <div class="grid plate-grid">
+        <div class="plate-media" data-reveal data-asset-slot="rttc">
+          <div class="plate-art art-rttc" aria-hidden="true">
+            <span class="rt-ground"></span>
+            <span class="rt-light"></span>
+            <span class="rt-cross"><span class="rt-beam-v"></span><span class="rt-beam-h"></span></span>
+            <span class="rt-grain"></span>
+            <span class="rt-title">Road to<br>the Cross</span>
+          </div>
+        </div>
+
+        <div class="plate-label" data-reveal data-reveal-delay="1">
+          <span class="plate-num">03</span>
+          <h2 class="plate-title plate-title-serif" id="rttc-title">Road to the Cross</h2>
+          <p class="plate-line">Christ-centred visual storytelling drawn from classical, Renaissance and Baroque
+            painting.</p>
+          <p class="plate-note">Painterly frames, carried into motion with AI-assisted cinematography.</p>
+          <p class="plate-discipline">RTTC · Visual storytelling</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- ═══════════════════════════════════════════════
+         04 — Becoming · Deliberately minimal
+         ═══════════════════════════════════════════════ -->
+    <article id="work-becoming" class="plate plate-becoming" aria-labelledby="becoming-title">
+      <div class="grid plate-grid">
+        <div class="plate-media" data-reveal data-asset-slot="becoming">
+          <div class="plate-art art-becoming" aria-hidden="true">
+            <span class="bc-word">Becoming</span>
+          </div>
+        </div>
+        <div class="plate-label" data-reveal data-reveal-delay="1">
+          <span class="plate-num">04</span>
+          <h2 class="plate-title" id="becoming-title" data-signature-type>Becoming</h2>
+          <p class="plate-discipline">Independent work</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- ═══════════════════════════════════════════════
+         05 — NORIC · Name and "Coming Soon" only
+         ═══════════════════════════════════════════════ -->
+    <article id="work-noric" class="plate plate-noric" aria-labelledby="noric-title">
+      <div class="grid plate-grid">
+        <div class="noric-wall" data-reveal>
+          <span class="plate-num">05</span>
+          <h2 class="noric-title" id="noric-title">NORIC</h2>
+          <p class="noric-soon">Coming Soon</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- ═══════════════════════════════════════════════
+         CLOSE
+         ═══════════════════════════════════════════════ -->
+    <section id="works-close" class="works-close" aria-label="Contact">
+      <div class="grid">
+        <div class="works-close-line" aria-hidden="true"></div>
+        <div class="works-close-col" data-reveal>
+          <a href="mailto:hello@hubcore.design" class="works-close-cta">hello@hubcore.design</a>
+          <a href="/atelier/" class="works-close-secondary">How we think &rarr;</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══════════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════════ -->
+  <footer id="footer" role="contentinfo">
+    <div class="grid footer-grid">
+      <div class="footer-meta">
+        <p class="footer-copy">&copy; 2026 HubCore. Independent Digital Atelier.</p>
+        <p class="footer-colophon">Set in ABC Favorit. Paper and graphite.</p>
+      </div>
+      <div class="footer-nav">
+        <a href="/" class="footer-link">Home</a>
+        <a href="/works/" class="footer-link is-active" aria-current="page">Work</a>
+        <a href="/atelier/" class="footer-link">Atelier</a>
+        <a href="/contact/" class="footer-link">Contact</a>
+        <a href="#works-opening" class="footer-link">Back to top &uarr;</a>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="/src/lib/hydrate-works.js"></script>
+  <script type="module" src="/works.js"></script>
+</body>
+
+</html>

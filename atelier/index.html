@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en" class="page-atelier">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atelier · HubCore</title>
+  <meta name="description" content="Atelier is how HubCore thinks through when plans meet real conditions, when a first approach stops working, and when a better one shows itself.">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/atelier.css">
+  <link rel="stylesheet" href="/signature/signature.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◯</text></svg>">
+</head>
+<body class="page-atelier">
+
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <!-- ═══════════════════════════════════════════════
+       NAVIGATION — Static on load, active Atelier state
+       ═══════════════════════════════════════════════ -->
+  <nav id="nav" class="is-visible" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="/" class="nav-wordmark" id="nav-wordmark">HubCore</a>
+      <ul class="nav-links">
+        <li><a href="/works/" class="nav-link" id="nav-work">Work</a></li>
+        <li><a href="/atelier/" class="nav-link is-active" id="nav-atelier" aria-current="page">Atelier</a></li>
+        <li><a href="/contact/" class="nav-link" id="nav-contact">Contact</a></li>
+      </ul>
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+    </div>
+    <div class="nav-overlay" id="nav-overlay">
+      <a href="/works/" class="overlay-link">Work</a>
+      <a href="/atelier/" class="overlay-link" aria-current="page">Atelier</a>
+      <a href="/contact/" class="overlay-link">Contact</a>
+    </div>
+  </nav>
+
+  <main id="main">
+
+    <!-- ═══════════════════════════════════════════════
+         SECTION 1: OPENING — ARCHITECTURAL SKETCHBOOK FOLIO
+         ═══════════════════════════════════════════════ -->
+    <section id="atelier-opening" aria-label="Atelier Opening">
+      <div class="grid atelier-hero-grid">
+        
+        <!-- Quiet Atelier Identifier Header -->
+        <div class="atelier-header-line">
+          <span class="atelier-identifier">HUBCORE ATELIER</span>
+        </div>
+
+        <!-- Left Block: Editorial Thesis & Subline (Cols 1-7) -->
+        <div class="atelier-opening-col">
+          <h1 class="atelier-opening-h1">
+            <span class="line"><span class="line-inner">The first drawing</span></span>
+            <span class="line"><span class="line-inner">is rarely the one we build.</span></span>
+          </h1>
+          <p class="atelier-opening-sub">
+            Atelier is about the part in between: what we keep, what we redraw, and how we tell the difference.
+          </p>
+        </div>
+
+        <!-- Right Block: Editorial Preface (Cols 8-12) -->
+        <div class="atelier-study-preface-col" aria-label="Drawing context">
+          <div class="atelier-study-preface">
+            <p class="study-preface-text">
+              A direct path meeting resistance, and the compass arc that found another way around.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         SECTION 2: THE REDRAWN LINE (SIGNATURE STICKY STAGE)
+         ═══════════════════════════════════════════════ -->
+    <div class="atelier-signature-track" id="signature-track">
+      <div class="atelier-signature-sticky">
+        <div class="grid signature-grid">
+          
+          <!-- Text States: Practice notes (4 Beats) -->
+          <div class="signature-text-col">
+            <div class="signature-state is-active" data-state="1">
+              <span class="signature-state-num">01 / Attempt</span>
+              <p class="signature-state-body">
+                A first version answers the brief. It is drawn before anything has pushed back.
+              </p>
+            </div>
+            <div class="signature-state" data-state="2">
+              <span class="signature-state-num">02 / Reconsider</span>
+              <p class="signature-state-body">
+                When something doesn't fit, the instinct is to push the first version harder. We've learned to stop and look at what is actually resisting.
+              </p>
+            </div>
+            <div class="signature-state" data-state="3">
+              <span class="signature-state-num">03 / Redraw</span>
+              <p class="signature-state-body">
+                The obstacle is not an obstruction to fight—it is the pivot. The compass finds its center on the resistance point.
+              </p>
+            </div>
+            <div class="signature-state" data-state="4">
+              <span class="signature-state-num">04 / Realise</span>
+              <p class="signature-state-body">
+                Often the thing in the way ends up deciding the shape. The first pass remains as pentimento beneath.
+              </p>
+            </div>
+          </div>
+
+          <!-- Drawing Stage: Erasure + Radial Reveal -->
+          <div class="signature-drawing-col">
+            <figure class="signature-figure">
+              <div class="signature-layers-wrap">
+                <!-- Scheme A: Forced attempt layer (erases to pentimento) -->
+                <img
+                  src="/drawings/scheme-a-2400.webp"
+                  srcset="/drawings/scheme-a-1200.webp 1200w, /drawings/scheme-a-2400.webp 2400w"
+                  sizes="(max-width: 768px) 100vw, 65vw"
+                  alt="Architectural graphite construction study Scheme A: a straight forced path clashing into a central benchmark obstacle"
+                  class="signature-layer signature-layer-a"
+                  id="sig-layer-a"
+                  width="2400"
+                  height="1600"
+                  decoding="async"
+                >
+                <!-- Scheme B: Compass arc layer (reveals from obstacle) -->
+                <img
+                  src="/drawings/scheme-b-2400.webp"
+                  srcset="/drawings/scheme-b-1200.webp 1200w, /drawings/scheme-b-2400.webp 2400w"
+                  sizes="(max-width: 768px) 100vw, 65vw"
+                  alt="Architectural graphite construction study Scheme B: an elegant calm compass arc radiating from the central benchmark obstacle"
+                  class="signature-layer signature-layer-b"
+                  id="sig-layer-b"
+                  width="2400"
+                  height="1600"
+                  decoding="async"
+                >
+              </div>
+              <figcaption class="signature-caption" id="sig-caption">
+                First and second pass, same sheet.
+              </figcaption>
+            </figure>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+         SECTION 3: STAYING WITH IT
+         ═══════════════════════════════════════════════ -->
+    <section id="atelier-craft" class="section-spacer" aria-label="Staying With It">
+      <div class="grid">
+        <div class="staying-maker-col" data-reveal>
+          <div class="staying-maker-wrap">
+            <video
+              class="staying-maker-video"
+              src="/Maker_kneeling_refine.mp4"
+              muted
+              loop
+              playsinline
+              preload="none"
+              aria-label="The Maker kneeling, carefully refining work on the atelier floor"
+            ></video>
+          </div>
+        </div>
+        <div class="staying-text-col" data-reveal data-reveal-delay="1">
+          <h2 class="staying-h2" data-signature-type>Staying with it</h2>
+          <p class="staying-body">
+            Most work goes through a stretch where it is unfinished and unconvincing, and progress is hard to see. We stay with it. That doesn't mean defending every early decision. It means keeping hold of what the work is for and letting the rest change.
+          </p>
+          <div class="staying-note-wrap">
+            <img
+              src="/measurement-annotation.png"
+              alt=""
+              class="staying-annotation-mark"
+              loading="lazy"
+              aria-hidden="true"
+            >
+            <p class="staying-note-text">
+              Not every obstacle is useful. Some are just in the way. Telling them apart is most of the job.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         SECTION 4: INVITATION
+         ═══════════════════════════════════════════════ -->
+    <section id="atelier-invitation" class="section-spacer" aria-label="Invitation">
+      <div class="grid">
+        <div class="invitation-transition-line" aria-hidden="true"></div>
+        <div class="invitation-col" data-reveal>
+          <h2 class="invitation-h2">What are you working on?</h2>
+          <p class="invitation-subline">
+            Bring it at whatever stage it's in. Half-formed is a good place to start.
+          </p>
+          <div class="invitation-actions">
+            <a href="mailto:hello@hubcore.design" class="invitation-cta">hello@hubcore.design</a>
+            <a href="/works/" class="invitation-secondary">See the work &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══════════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════════ -->
+  <footer id="footer" role="contentinfo">
+    <div class="grid footer-grid">
+      <div class="footer-meta">
+        <p class="footer-copy">&copy; 2026 HubCore. Independent Digital Atelier.</p>
+        <p class="footer-colophon">Set in ABC Favorit. Paper and graphite.</p>
+      </div>
+      <div class="footer-nav">
+        <a href="/" class="footer-link">Home</a>
+        <a href="/works/" class="footer-link">Work</a>
+        <a href="/atelier/" class="footer-link is-active" aria-current="page">Atelier</a>
+        <a href="/contact/" class="footer-link">Contact</a>
+        <a href="#atelier-opening" class="footer-link">Back to top &uarr;</a>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="/atelier.js"></script>
+</body>
+</html>

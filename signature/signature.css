@@ -1,0 +1,270 @@
+/* ============================================================
+   HubCore — Signature Effect · Styles
+   Layer styling for all modes and treatments.
+   Import alongside signature.js.
+   ============================================================ */
+
+/* ─── SHARED OVERLAY VISIBILITY ──────────────────────────── */
+
+.sig__channels,
+.type__channels,
+.form__channels {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.is-active .sig__channels,
+.is-active .type__channels,
+.is-active .form__channels,
+.is-active > .sig__channels,
+.is-active > .type__channels,
+.is-active > .form__channels {
+  visibility: visible;
+}
+
+.is-reduced .sig__channels,
+.is-reduced .type__channels,
+.is-reduced .form__channels,
+.is-reduced > .sig__channels,
+.is-reduced > .type__channels,
+.is-reduced > .form__channels {
+  transition: opacity 140ms linear;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   IMAGE mode — frame & layer rules
+   ═══════════════════════════════════════════════════════════ */
+
+.sig__frame {
+  position: relative;
+  overflow: hidden;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.sig__img,
+.sig__ch,
+.sig__echo,
+.sig__tonal {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  -webkit-user-drag: none;
+}
+
+.sig__channels {
+  position: absolute;
+  inset: 0;
+  isolation: isolate;
+}
+
+.sig__ch,
+.sig__echo,
+.sig__tonal {
+  position: absolute;
+  inset: 0;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   TYPOGRAPHY mode — anchor & layer rules
+   ═══════════════════════════════════════════════════════════ */
+
+[data-signature-type] {
+  position: relative;
+  display: inline-block;
+}
+
+.type__channels {
+  position: absolute;
+  inset: 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.type__ch,
+.type__echo,
+.type__contour,
+.type__tonal {
+  position: absolute;
+  inset: 0;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   GRAPHIC FORM (SVG) mode — layer rules
+   ═══════════════════════════════════════════════════════════ */
+
+.form__channels {
+  isolation: isolate;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   TREATMENT: graphite (HubCore Default)
+   Tactile displacement — 2 muted offset copies.
+   Zero compositing constraints: works on light paper, warm stone,
+   dark ink, or client backgrounds.
+   ═══════════════════════════════════════════════════════════ */
+
+/* Image: high-contrast monochromatic graphite print impression */
+.sig__channels--graphite {
+  background: none;
+}
+.sig__channels--graphite .sig__echo {
+  filter: grayscale(100%) contrast(140%) brightness(0.92);
+  mix-blend-mode: multiply;
+}
+.sig__channels--graphite .sig__echo--0 {
+  opacity: 0.55;
+}
+.sig__channels--graphite .sig__echo--1 {
+  opacity: 0.42;
+}
+
+/* Type: authentic graphite pencil echoes.
+   NO z-index: -1 so echoes are not trapped behind solid black stems or parent backgrounds.
+   With mix-blend-mode: multiply:
+   - Over black glyphs: black multiplied by graphite remains 100% solid, crisp, and black.
+   - Outside glyphs on paper: graphite pencil lines step out with rich, tactile contrast. */
+.type__channels--graphite {
+  mix-blend-mode: multiply;
+}
+.type__channels--graphite .type__echo--0 {
+  color: var(--graphite, #3d3d3d);
+  opacity: 0.72;
+}
+.type__channels--graphite .type__echo--1 {
+  color: var(--ink-secondary, #4a4a4a);
+  opacity: 0.55;
+}
+
+.sig--graphite.is-active {
+  color: inherit;
+}
+
+/* Form: vector graphite echoes */
+.form__channels--graphite {
+  mix-blend-mode: multiply;
+}
+.form__channels--graphite .form__echo--0 {
+  opacity: 0.58;
+}
+.form__channels--graphite .form__echo--1 {
+  opacity: 0.44;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   TREATMENT: contour (Typography Only)
+   Fine offset outlines — 2 stroke-only copies.
+   Architectural registration-mark feel.
+   High-contrast drafting ink strokes visible on paper & dark grounds.
+   ═══════════════════════════════════════════════════════════ */
+
+.type__channels--contour .type__contour {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--ink-secondary, #3d3d3d);
+  paint-order: stroke fill;
+  opacity: 0.85;
+}
+.type__channels--contour .type__contour--1 {
+  -webkit-text-stroke: 1.5px var(--ink-tertiary, #666666);
+  opacity: 0.65;
+}
+
+.sig--contour.is-active {
+  color: inherit;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   TREATMENT: tonal
+   Restrained warm terracotta / cool slate duotone separation.
+   Editorial, tactile, quiet. Works on any background.
+   ═══════════════════════════════════════════════════════════ */
+
+/* Image: distinct warm terracotta and cool slate duotone separation */
+.sig__channels--tonal {
+  background: none;
+}
+.sig__channels--tonal .sig__tonal {
+  mix-blend-mode: multiply;
+}
+.sig__channels--tonal .sig__tonal--0 {
+  filter: sepia(0.9) saturate(2.4) hue-rotate(-25deg) contrast(1.15);
+  opacity: 0.62;
+}
+.sig__channels--tonal .sig__tonal--1 {
+  filter: saturate(1.8) hue-rotate(170deg) contrast(1.2);
+  opacity: 0.52;
+}
+
+/* Type: rich warm terracotta & cool slate duotone echoes.
+   NO z-index: -1 so echoes are visible outside glyphs on paper.
+   With mix-blend-mode: multiply, overlapping text stays solid ink. */
+.type__channels--tonal {
+  mix-blend-mode: multiply;
+}
+.type__channels--tonal .type__tonal--0 {
+  color: #b5532f; /* warm terracotta */
+  opacity: 0.78;
+}
+.type__channels--tonal .type__tonal--1 {
+  color: #3b5870; /* cool slate */
+  opacity: 0.68;
+}
+
+.sig--tonal.is-active {
+  color: inherit;
+}
+
+/* Form: warm terracotta & cool slate SVG echoes */
+.form__channels--tonal {
+  mix-blend-mode: multiply;
+}
+.form__channels--tonal .form__tonal--0 {
+  opacity: 0.65;
+}
+.form__channels--tonal .form__tonal--1 {
+  opacity: 0.58;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   TREATMENT: chromatic
+   RGB / CMY channel separation — the original prototype effect.
+   ═══════════════════════════════════════════════════════════ */
+
+/* Image: screen-blend over black — strictly requires black frame bg */
+.sig--chromatic .sig__frame,
+.sig__channels--chromatic {
+  background: #000;
+}
+.sig__channels--chromatic .sig__ch {
+  mix-blend-mode: screen;
+}
+.sig__ch--r { filter: url(#hc-r); }
+.sig__ch--g { filter: url(#hc-g); }
+.sig__ch--b { filter: url(#hc-b); }
+
+/* Type: multiply-blend with CMY tints */
+.type__channels--chromatic .type__ch {
+  mix-blend-mode: multiply;
+}
+.type__ch--r { color: #18ffff; }
+.type__ch--g { color: #ff18ff; }
+.type__ch--b { color: #ffff1a; }
+
+/* In chromatic type, hide original glyphs while channels recombine */
+.sig--chromatic.is-active:not(.is-reduced) {
+  color: transparent;
+}
+
+/* Form: multiply-blend recoloured SVG copies */
+.form__channels--chromatic .form__ch {
+  mix-blend-mode: multiply;
+}

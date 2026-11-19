@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HubCore Signature Treatments — Verification Harness</title>
+  <link rel="stylesheet" href="./signature.css">
+  <style>
+    :root {
+      --ink: #1a1a1a;
+      --ink-secondary: #4a4a4a;
+      --ink-tertiary: #7a7a7a;
+      --ink-ghost: #a8a8a8;
+      --graphite: #3d3d3d;
+      --graphite-light: #b0b0b0;
+      --paper: #f5f2ed;
+      --paper-warm: #ede8e0;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font: 15px/1.55 system-ui, sans-serif;
+    }
+    .section {
+      padding: 14vh 6vw 6vh;
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+    .section + .section { padding-top: 4vh; }
+    .label {
+      font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--ink-tertiary); margin: 0 0 .5rem;
+    }
+    h1 { font-size: 28px; margin: 0 0 .5rem; font-weight: 600; }
+    .desc { color: var(--ink-secondary); font-size: 14px; max-width: 40rem; margin: 0 0 1rem; }
+
+    /* Image frame */
+    .sig { margin: 0; width: min(100%, 600px); }
+    .sig__frame { aspect-ratio: 3 / 2; }
+
+    /* Type target */
+    .type-target {
+      position: relative;
+      display: inline-block;
+      margin: 0 0 1rem;
+      font: 800 clamp(44px, 8vw, 110px)/0.92 "Helvetica Neue", Helvetica, Arial, sans-serif;
+      letter-spacing: -0.04em;
+      color: var(--ink);
+    }
+
+    /* Form */
+    .form { margin: 0 0 1rem; width: min(100%, 600px); }
+    .form__svg { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; }
+
+    /* Controls */
+    .controls {
+      display: flex; gap: 10px; align-items: center; margin: 1rem 0;
+    }
+    .btn {
+      font: inherit; font-weight: 600; font-size: 13px;
+      padding: 8px 16px; border: 0; border-radius: 6px;
+      background: var(--ink); color: #fff; cursor: pointer;
+    }
+    .btn:disabled { opacity: .4; cursor: default; }
+    .status { font-size: 13px; color: var(--ink-tertiary); }
+
+    .tail { height: 40vh; }
+    #log {
+      padding: 24px 6vw; font: 13px/1.5 ui-monospace, Consolas, monospace;
+      white-space: pre-wrap; background: #fff; border-top: 1px solid rgba(0,0,0,.08);
+    }
+  </style>
+</head>
+<body>
+  <div class="section">
+    <p class="label">HubCore Atelier · Signature System</p>
+    <h1>Treatments Verification</h1>
+    <p class="desc">
+      Automated and interactive verification of all 4 visual expressions:
+      <strong>graphite</strong> (tactile pencil-drafting displacement),
+      <strong>contour</strong> (fine architectural registration stroke),
+      <strong>tonal</strong> (restrained terracotta/slate duotone separation), and
+      <strong>chromatic</strong> (RGB/CMY channel split).
+    </p>
+  </div>
+
+  <!-- 1. IMAGE x GRAPHITE (HubCore Natural) -->
+  <div class="section">
+    <p class="label">1. Image · Graphite (Paper Background — Monochromatic Print Offset)</p>
+    <figure class="sig" id="img-graphite">
+      <div class="sig__frame">
+        <img class="sig__img" src="./graphite-construction.png" alt="Graphite construction">
+      </div>
+    </figure>
+    <div class="controls">
+      <button class="btn" data-play="img-graphite">Trigger</button>
+      <span class="status" data-state="img-graphite">idle</span>
+    </div>
+  </div>
+
+  <!-- 2. IMAGE x TONAL -->
+  <div class="section">
+    <p class="label">2. Image · Tonal (Terracotta / Slate Duotone Separation)</p>
+    <figure class="sig" id="img-tonal">
+      <div class="sig__frame">
+        <img class="sig__img" src="./graphite-construction.png" alt="Graphite construction">
+      </div>
+    </figure>
+    <div class="controls">
+      <button class="btn" data-play="img-tonal">Trigger</button>
+      <span class="status" data-state="img-tonal">idle</span>
+    </div>
+  </div>
+
+  <!-- 3. IMAGE x CHROMATIC (Preserved Original) -->
+  <div class="section">
+    <p class="label">3. Image · Chromatic (Screen-blend over Black Frame)</p>
+    <figure class="sig" id="img-chromatic">
+      <div class="sig__frame">
+        <img class="sig__img" src="./graphite-construction.png" alt="Graphite construction">
+      </div>
+    </figure>
+    <div class="controls">
+      <button class="btn" data-play="img-chromatic">Trigger</button>
+      <span class="status" data-state="img-chromatic">idle</span>
+    </div>
+  </div>
+
+  <!-- 4. TYPOGRAPHY x GRAPHITE -->
+  <div class="section">
+    <p class="label">4. Typography · Graphite (Architectural Pencil Tracing)</p>
+    <h2 class="type-target" id="type-graphite">Between<br>states.</h2>
+    <div class="controls">
+      <button class="btn" data-play="type-graphite">Trigger</button>
+      <span class="status" data-state="type-graphite">idle</span>
+    </div>
+  </div>
+
+  <!-- 5. TYPOGRAPHY x CONTOUR -->
+  <div class="section">
+    <p class="label">5. Typography · Contour (1px Fine Registration Outlines — Preserved)</p>
+    <h2 class="type-target" id="type-contour">Between<br>states.</h2>
+    <div class="controls">
+      <button class="btn" data-play="type-contour">Trigger</button>
+      <span class="status" data-state="type-contour">idle</span>
+    </div>
+  </div>
+
+  <!-- 6. TYPOGRAPHY x TONAL -->
+  <div class="section">
+    <p class="label">6. Typography · Tonal (Terracotta & Slate Offset)</p>
+    <h2 class="type-target" id="type-tonal">Between<br>states.</h2>
+    <div class="controls">
+      <button class="btn" data-play="type-tonal">Trigger</button>
+      <span class="status" data-state="type-tonal">idle</span>
+    </div>
+  </div>
+
+  <!-- 7. TYPOGRAPHY x CHROMATIC -->
+  <div class="section">
+    <p class="label">7. Typography · Chromatic (CMY Multiply-blended Separation)</p>
+    <h2 class="type-target" id="type-chromatic">Between<br>states.</h2>
+    <div class="controls">
+      <button class="btn" data-play="type-chromatic">Trigger</button>
+      <span class="status" data-state="type-chromatic">idle</span>
+    </div>
+  </div>
+
+  <!-- 8. FORM x GRAPHITE -->
+  <div class="section">
+    <p class="label">8. Graphic Form · Graphite (Pencil Drafting Echoes)</p>
+    <figure class="form" id="form-graphite">
+      <svg class="form__svg" viewBox="0 0 1200 800" role="img" aria-label="Architectural drawing">
+        <g class="form__art">
+          <rect x="-80" y="-80" width="1360" height="960" fill="#e9e7e2"/>
+          <path d="M140 640 A470 470 0 0 1 1080 640" fill="none" stroke="#a9b2bc" stroke-width="2" stroke-dasharray="6 10"/>
+          <polygon points="620,640 900,640 1010,700 730,700" fill="#d9d4cb"/>
+          <line x1="90" y1="640" x2="1110" y2="640" stroke="#1d1f24" stroke-width="3"/>
+          <rect x="310" y="210" width="310" height="430" fill="#d6d1c7" stroke="#1d1f24" stroke-width="4"/>
+          <path d="M385 640 V440 A80 80 0 0 1 545 440 V640 Z" fill="#b5532f" stroke="#1d1f24" stroke-width="4"/>
+          <path d="M620 640 V430 A140 140 0 0 1 900 430 V640 Z" fill="#c3ccd5" stroke="#1d1f24" stroke-width="4"/>
+          <circle cx="880" cy="220" r="54" fill="#b5532f"/>
+        </g>
+      </svg>
+    </figure>
+    <div class="controls">
+      <button class="btn" data-play="form-graphite">Trigger</button>
+      <span class="status" data-state="form-graphite">idle</span>
+    </div>
+  </div>
+
+  <!-- 9. FORM x TONAL -->
+  <div class="section">
+    <p class="label">9. Graphic Form · Tonal (Terracotta & Slate Line Separation)</p>
+    <figure class="form" id="form-tonal">
+      <svg class="form__svg" viewBox="0 0 1200 800" role="img" aria-label="Architectural drawing">
+        <g class="form__art">
+          <rect x="-80" y="-80" width="1360" height="960" fill="#e9e7e2"/>
+          <path d="M140 640 A470 470 0 0 1 1080 640" fill="none" stroke="#a9b2bc" stroke-width="2" stroke-dasharray="6 10"/>
+          <polygon points="620,640 900,640 1010,700 730,700" fill="#d9d4cb"/>
+          <line x1="90" y1="640" x2="1110" y2="640" stroke="#1d1f24" stroke-width="3"/>
+          <rect x="310" y="210" width="310" height="430" fill="#d6d1c7" stroke="#1d1f24" stroke-width="4"/>
+          <path d="M385 640 V440 A80 80 0 0 1 545 440 V640 Z" fill="#b5532f" stroke="#1d1f24" stroke-width="4"/>
+          <path d="M620 640 V430 A140 140 0 0 1 900 430 V640 Z" fill="#c3ccd5" stroke="#1d1f24" stroke-width="4"/>
+          <circle cx="880" cy="220" r="54" fill="#b5532f"/>
+        </g>
+      </svg>
+    </figure>
+    <div class="controls">
+      <button class="btn" data-play="form-tonal">Trigger</button>
+      <span class="status" data-state="form-tonal">idle</span>
+    </div>
+  </div>
+
+  <!-- 10. FORM x CHROMATIC -->
+  <div class="section">
+    <p class="label">10. Graphic Form · Chromatic (Recoloured Hex Channel Multiply)</p>
+    <figure class="form" id="form-chromatic">
+      <svg class="form__svg" viewBox="0 0 1200 800" role="img" aria-label="Architectural drawing">
+        <g class="form__art">
+          <rect x="-80" y="-80" width="1360" height="960" fill="#e9e7e2"/>
+          <path d="M140 640 A470 470 0 0 1 1080 640" fill="none" stroke="#a9b2bc" stroke-width="2" stroke-dasharray="6 10"/>
+          <polygon points="620,640 900,640 1010,700 730,700" fill="#d9d4cb"/>
+          <line x1="90" y1="640" x2="1110" y2="640" stroke="#1d1f24" stroke-width="3"/>
+          <rect x="310" y="210" width="310" height="430" fill="#d6d1c7" stroke="#1d1f24" stroke-width="4"/>
+          <path d="M385 640 V440 A80 80 0 0 1 545 440 V640 Z" fill="#b5532f" stroke="#1d1f24" stroke-width="4"/>
+          <path d="M620 640 V430 A140 140 0 0 1 900 430 V640 Z" fill="#c3ccd5" stroke="#1d1f24" stroke-width="4"/>
+          <circle cx="880" cy="220" r="54" fill="#b5532f"/>
+        </g>
+      </svg>
+    </figure>
+    <div class="controls">
+      <button class="btn" data-play="form-chromatic">Trigger</button>
+      <span class="status" data-state="form-chromatic">idle</span>
+    </div>
+  </div>
+
+  <div class="tail" aria-hidden="true"></div>
+
+  <div id="log">Running automated harness checks…</div>
+
+  <script type="module">
+    import { createSignature, treatments } from './signature.js';
+
+    const instances = {};
+
+    instances['img-graphite']   = createSignature('image', '#img-graphite',   { treatment: 'graphite' });
+    instances['img-tonal']      = createSignature('image', '#img-tonal',      { treatment: 'tonal' });
+    instances['img-chromatic']  = createSignature('image', '#img-chromatic',  { treatment: 'chromatic' });
+    instances['type-graphite']  = createSignature('type',  '#type-graphite',  { treatment: 'graphite' });
+    instances['type-contour']   = createSignature('type',  '#type-contour',   { treatment: 'contour' });
+    instances['type-tonal']     = createSignature('type',  '#type-tonal',     { treatment: 'tonal' });
+    instances['type-chromatic'] = createSignature('type',  '#type-chromatic', { treatment: 'chromatic' });
+    instances['form-graphite']  = createSignature('form',  '#form-graphite',  { treatment: 'graphite' });
+    instances['form-tonal']     = createSignature('form',  '#form-tonal',     { treatment: 'tonal' });
+    instances['form-chromatic'] = createSignature('form',  '#form-chromatic', { treatment: 'chromatic' });
+
+    // Buttons
+    document.querySelectorAll('[data-play]').forEach(btn => {
+      const key = btn.dataset.play;
+      btn.addEventListener('click', () => instances[key]?.play());
+    });
+
+    // State monitor
+    setInterval(() => {
+      for (const [key, inst] of Object.entries(instances)) {
+        const el = document.querySelector(`[data-state="${key}"]`);
+        if (el && inst) el.textContent = `${inst.state} (${inst.activations}x)`;
+      }
+    }, 80);
+
+    // Automated test execution
+    const wait = (ms) => new Promise(r => setTimeout(r, ms));
+    const out = [];
+    let fails = 0;
+    const log = (ok, msg) => { if (!ok) fails++; out.push(`${ok ? 'PASS' : 'FAIL'}  ${msg}`); };
+
+    (async () => {
+      await wait(100);
+
+      // 1. Check all 4 treatments registered
+      log(typeof treatments.graphite  === 'object', 'treatment "graphite" registered');
+      log(typeof treatments.contour   === 'object', 'treatment "contour" registered');
+      log(typeof treatments.tonal     === 'object', 'treatment "tonal" registered');
+      log(typeof treatments.chromatic === 'object', 'treatment "chromatic" registered');
+
+      // 2. Check all instances initialized
+      for (const [key, inst] of Object.entries(instances)) {
+        log(inst !== null, `instance ${key} created successfully`);
+      }
+
+      // 3. Selective mode compatibility: contour rejected for non-typography
+      const contourOnImg = createSignature('image', '#img-graphite', { treatment: 'contour' });
+      log(contourOnImg === null, 'contour treatment rejected on image mode (typography only)');
+
+      // 4. Black background requirement isolation
+      const graphiteFrame = document.querySelector('#img-graphite .sig__frame');
+      const chromaticFrame = document.querySelector('#img-chromatic .sig__frame');
+      const gBg = getComputedStyle(graphiteFrame).backgroundColor;
+      const cBg = getComputedStyle(chromaticFrame).backgroundColor;
+      log(cBg === 'rgb(0, 0, 0)', 'chromatic image retains strictly necessary black frame bg');
+      log(gBg !== 'rgb(0, 0, 0)', 'graphite image has no black background requirement');
+
+      // 5. Test execution across all instances sequentially for clean verification
+      for (const [key, inst] of Object.entries(instances)) {
+        if (!inst) continue;
+        const root = document.getElementById(key);
+        inst.play();
+        const wasRunning = inst.state === 'running' && root.classList.contains('is-active');
+        log(wasRunning, `${key} plays cleanly and marks active`);
+        
+        // Wait for instance to finish
+        await wait(750);
+        
+        const isPristine = inst.state === 'idle' && !root.classList.contains('is-active');
+        log(isPristine, `${key} completes cleanly and returns to pristine idle state`);
+      }
+
+      // Summary
+      const total = out.length;
+      out.push(`\n${fails === 0 ? 'ALL CHECKS PASSED' : fails + ' FAILURES'} (${total - fails}/${total})`);
+      document.getElementById('log').textContent = out.join('\n');
+    })().catch(err => {
+      document.getElementById('log').textContent = 'HARNESS ERROR: ' + err.stack;
+    });
+  </script>
+</body>
+</html>

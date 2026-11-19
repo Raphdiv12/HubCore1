@@ -1,0 +1,21 @@
+{
+  "name": "hubcore",
+  "version": "1.0.0",
+  "description": "HubCore — Premium Independent Digital Atelier",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "dev:sig": "vite signature --port 3031 --open",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [],
+  "author": "HubCore",
+  "license": "ISC",
+  "devDependencies": {
+    "vite": "^8.3.1"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.119.0"
+  }
+}

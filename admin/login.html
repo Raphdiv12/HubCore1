@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login · HubCore CMS</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◯</text></svg>">
+  <style>
+    @font-face {
+      font-family: 'ABC Favorit';
+      src: local('ABC Favorit'), local('ABCFavorit-Regular');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'ABC Favorit';
+      src: local('ABC Favorit Medium'), local('ABCFavorit-Medium');
+      font-weight: 500; font-style: normal; font-display: swap;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --ink: #1a1a1a;
+      --ink-secondary: #4a4a4a;
+      --ink-ghost: #a8a8a8;
+      --paper: #f5f2ed;
+      --paper-warm: #ede8e0;
+      --rule: rgba(26, 26, 26, 0.08);
+      --rule-strong: rgba(26, 26, 26, 0.15);
+      --error: #b5532f;
+      --font-primary: 'ABC Favorit', 'Suisse Intl', -apple-system, 'Helvetica Neue', sans-serif;
+    }
+
+    body {
+      font-family: var(--font-primary);
+      background: var(--paper);
+      color: var(--ink);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 380px;
+    }
+
+    .login-wordmark {
+      font-size: 1.125rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.5rem;
+    }
+
+    .login-label {
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-secondary);
+      margin-bottom: 2.5rem;
+    }
+
+    .field {
+      margin-bottom: 1.25rem;
+    }
+
+    .field label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink-secondary);
+      margin-bottom: 0.5rem;
+    }
+
+    .field input {
+      width: 100%;
+      font-family: var(--font-primary);
+      font-size: 0.9375rem;
+      padding: 0.75rem 0;
+      border: none;
+      border-bottom: 1px solid var(--rule-strong);
+      background: transparent;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .field input:focus {
+      border-bottom-color: var(--ink);
+    }
+
+    .login-btn {
+      width: 100%;
+      font-family: var(--font-primary);
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      padding: 0.875rem 1.5rem;
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: var(--paper);
+      cursor: pointer;
+      margin-top: 1rem;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .login-btn:hover {
+      background: transparent;
+      color: var(--ink);
+    }
+
+    .login-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .login-error {
+      font-size: 0.8125rem;
+      color: var(--error);
+      margin-top: 1rem;
+      min-height: 1.2em;
+    }
+
+    .login-footer {
+      margin-top: 3rem;
+      font-size: 0.6875rem;
+      color: var(--ink-ghost);
+      letter-spacing: 0.04em;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-card">
+    <p class="login-wordmark">HubCore</p>
+    <p class="login-label">Content Management</p>
+
+    <form id="login-form" autocomplete="on">
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required autocomplete="email" autofocus>
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required autocomplete="current-password">
+      </div>
+      <button type="submit" class="login-btn" id="login-btn">Sign in</button>
+      <p class="login-error" id="login-error" role="alert" aria-live="polite"></p>
+    </form>
+
+    <p class="login-footer">&copy; 2026 HubCore. Private administration.</p>
+  </div>
+
+  <script type="module" src="/admin/js/auth.js"></script>
+</body>
+</html>
