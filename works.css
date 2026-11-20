@@ -752,7 +752,7 @@ html.js .plate-kukuchow .plate-media:not(.is-revealed) .kc-path { stroke-dashoff
   .plate-rttc .plate-media { grid-column: 1 / 7; }
   .plate-rttc .plate-label { grid-column: 7 / 13; }
 
-  .plate-becoming .plate-label { grid-column: 3 / 7; }
+  .plate-becoming .plate-label { grid-column: 3 / 7; justify-self: start; text-align: left; }
   .plate-becoming .plate-media { grid-column: 7 / 11; }
 }
 
