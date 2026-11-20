@@ -273,10 +273,16 @@ treatments.contour = {
 
   setup(mode, root, contentEl, cfg) {
     if (mode !== 'type') return null;  // Typography only
+    // Clean up any existing channel container before building layers
+    const existing = root.querySelector('.type__channels');
+    if (existing) existing.remove();
+
     const container = document.createElement('span');
     container.className = 'type__channels type__channels--contour';
     container.setAttribute('aria-hidden', 'true');
-    const source = root.innerHTML;
+    const source = (root.childNodes[0]?.nodeType === Node.TEXT_NODE
+      ? root.childNodes[0].textContent
+      : root.textContent).trim() || 'Becoming';
     const layers = [0, 1].map((i) => {
       const el = document.createElement('span');
       el.className = `type__contour type__contour--${i}`;
@@ -289,6 +295,10 @@ treatments.contour = {
   },
 
   applyPose(pose, layers, jitterEl, shiftFn, setup) {
+    // Self-healing: if container was detached by external DOM updates, reattach
+    if (setup && setup.container && setup.root && !setup.root.contains(setup.container)) {
+      setup.root.appendChild(setup.container);
+    }
     const o = pose.offsets;
     layers[0].style.transform = shiftFn(o[0].x, o[0].y);
     layers[1].style.transform = shiftFn(o[1].x, o[1].y);
@@ -300,6 +310,9 @@ treatments.contour = {
   },
 
   applyReduced(layers, cfg, shiftFn, setup) {
+    if (setup && setup.container && setup.root && !setup.root.contains(setup.container)) {
+      setup.root.appendChild(setup.container);
+    }
     const a = Math.max(1.5, cfg.split * 0.4);
     layers[0].style.transform = shiftFn(-a, 0);
     layers[1].style.transform = shiftFn(a, 0);

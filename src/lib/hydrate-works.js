@@ -60,13 +60,29 @@ export async function hydrateWorks() {
           assetEl.alt = project.title;
         }
 
-        // Update labels if provided
+        // Update labels if provided (safely preserving interactive signature DOM)
         const titleEl = plate?.querySelector('.plate-title');
         const lineEl = plate?.querySelector('.plate-line');
         const noteEl = plate?.querySelector('.plate-note');
         const discEl = plate?.querySelector('.plate-discipline');
 
-        if (titleEl && project.title) titleEl.textContent = project.title;
+        if (titleEl && project.title) {
+          if (titleEl.hasAttribute('data-signature-type')) {
+            const firstText = titleEl.childNodes[0]?.nodeType === Node.TEXT_NODE
+              ? titleEl.childNodes[0].textContent.trim()
+              : titleEl.textContent.trim();
+            if (firstText !== project.title) {
+              if (titleEl.childNodes[0]?.nodeType === Node.TEXT_NODE) {
+                titleEl.childNodes[0].textContent = project.title;
+              }
+              titleEl.querySelectorAll('.type__contour').forEach((echo) => {
+                echo.textContent = project.title;
+              });
+            }
+          } else if (titleEl.textContent !== project.title) {
+            titleEl.textContent = project.title;
+          }
+        }
         if (lineEl && project.summary) lineEl.textContent = project.summary;
         if (noteEl && project.description) noteEl.textContent = project.description;
         if (discEl && (project.discipline || project.category)) {

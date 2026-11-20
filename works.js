@@ -16,9 +16,9 @@ function onReady(fn) {
 onReady(() => {
   requestAnimationFrame(() => document.documentElement.classList.add('is-loaded'));
   initNav();
+  initContourSignature();   // Build signature layers before reveals or hydration can touch the DOM
   initReveals();
   initPlateVideos();
-  initContourSignature();
 });
 
 /* ─── NAVIGATION ─────────────────────────────────────────── */
@@ -126,35 +126,13 @@ function initContourSignature() {
   const el = document.querySelector('#becoming-title[data-signature-type]');
   if (!el) return;
 
-  // The signature's IntersectionObserver can fire while the parent
-  // plate-label is still invisible (opacity: 0) from the scroll-reveal
-  // animation.  Destroy the built-in observer and defer playback until
-  // the reveal transition has finished so the contour effect is visible.
   const sig = createSignature('type', el, {
     treatment: 'contour',
     split: 9,
     duration: 620,
     step: 70,
-    zone: { top: '999%', bottom: '999%' },   // effectively disable auto-trigger
   });
   if (!sig) return;
-
-  // Wait for the parent plate-label reveal to complete, then play once.
-  const label = el.closest('[data-reveal]');
-  if (label) {
-    const playOnce = () => {
-      if (!label.classList.contains('is-revealed')) return;
-      label.removeEventListener('transitionend', playOnce);
-      clearTimeout(fallback);
-      // Small extra pause so the label is fully opaque before displacement
-      setTimeout(() => { if (sig.state === 'idle') sig.play(); }, 60);
-    };
-    label.addEventListener('transitionend', playOnce);
-    // Fallback: if already revealed (e.g. rapid scroll, no-JS fallback)
-    const fallback = setTimeout(() => {
-      if (label.classList.contains('is-revealed') && sig.state === 'idle') sig.play();
-    }, 1800);
-  }
 
   el.style.cursor = 'pointer';
   el.title = 'Click or hover to replay alignment signature';
