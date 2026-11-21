@@ -222,14 +222,17 @@ body.page-atelier {
   flex-direction: column;
   justify-content: center;
   opacity: 0;
+  visibility: hidden;
   transform: translateY(14px);
-  transition: opacity 0.6s var(--ease-smooth), transform 0.6s var(--ease-smooth);
+  transition: opacity 0.22s var(--ease-out), transform 0.22s var(--ease-out), visibility 0.22s;
   pointer-events: none;
 }
 
 .signature-state.is-active {
   opacity: 1;
+  visibility: visible;
   transform: translateY(0);
+  transition: opacity 0.45s var(--ease-smooth) 0.1s, transform 0.45s var(--ease-smooth) 0.1s, visibility 0.45s;
   pointer-events: auto;
 }
 
@@ -674,7 +677,7 @@ html:not(.js) .invitation-transition-line {
   }
 
   .atelier-signature-track {
-    height: 190vh;
+    height: 240vh;
   }
 
   .signature-grid {
@@ -686,13 +689,13 @@ html:not(.js) .invitation-transition-line {
 
   .signature-drawing-col {
     width: 100%;
-    max-width: 580px;
+    max-width: 640px;
     order: 1;
   }
 
   .signature-text-col {
     width: 100%;
-    max-width: 580px;
+    max-width: 640px;
     order: 2;
   }
 
@@ -733,7 +736,7 @@ html:not(.js) .invitation-transition-line {
   }
 }
 
-/* Mobile: iPhone 14/15/16 (390px) & iPhone SE (375px) */
+/* Mobile: iPhone 14/15/16 (390px), iPhone SE (375px), compact (320px) & Max (430px) */
 @media (max-width: 640px) {
   #atelier-opening {
     padding-top: calc(var(--nav-height) + var(--space-sm));
@@ -761,47 +764,125 @@ html:not(.js) .invitation-transition-line {
     max-width: 100%;
   }
 
+  /* Process section runway: calm, paced scroll distance (~275px per stage) */
   .atelier-signature-track {
-    height: 180vh;
+    height: 260vh;
   }
 
   .atelier-signature-sticky {
     height: 100svh;
     justify-content: center;
     padding: 0;
+    /* Pure paper ground shields out dark photographic shadows and texture mottling */
+    background-color: var(--paper);
+    position: sticky;
+    top: 0;
+    z-index: 2;
   }
 
   .signature-grid {
-    gap: var(--space-sm);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    gap: 0;
+    width: 100%;
+    max-width: 100%;
+    padding: 0; /* Let architectural drawing bleed edge-to-edge for maximum scale */
   }
 
-  /* Let the signature drawing use the full phone measure — it is the page's centrepiece */
+  /* 1. Maximised Architectural Drawing Folio Presentation */
   .signature-drawing-col {
     width: 100%;
     max-width: none;
+    order: 1;
+    position: relative;
   }
 
-  .signature-text-col {
+  .signature-figure {
     width: 100%;
-    max-width: none;
-    margin-top: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
   }
 
-  .signature-state-num {
-    font-size: var(--text-xs);
-    letter-spacing: 0.1em;
-    margin-bottom: 0.25rem;
-  }
-
-  .signature-state-body {
-    font-size: clamp(1.05rem, 4.2vw, 1.2rem);
-    line-height: 1.45;
+  .signature-layers-wrap {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    background: rgba(26, 26, 26, 0.015);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), inset 0 -1px 0 rgba(255, 255, 255, 0.45);
   }
 
   .signature-caption {
+    font-family: var(--font-primary);
     font-size: var(--text-xs);
-    margin-top: 0.25rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-secondary);
+    padding: 0.45rem var(--grid-margin) 0;
+    margin-top: 0;
     text-align: right;
+    min-height: 1.4rem;
+  }
+
+  /* 2. Pristine Text Readability & Stage Layout */
+  .signature-text-col {
+    width: 100%;
+    max-width: none;
+    order: 2;
+    padding: clamp(1.2rem, 3.8vh, 2rem) var(--grid-margin) 0;
+    margin-top: 0;
+    min-height: clamp(6.75rem, 18vh, 8.5rem); /* Stable reserved space prevents height jumps */
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .signature-state {
+    grid-area: 1 / 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px);
+    /* Fast 180ms exit clears previous stage before new stage arrives */
+    transition: opacity 0.18s var(--ease-out), transform 0.18s var(--ease-out), visibility 0.18s;
+    pointer-events: none;
+  }
+
+  .signature-state.is-active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    /* Delayed entrance (120ms delay) guarantees zero overlap with outgoing beat */
+    transition: opacity 0.38s var(--ease-smooth) 0.12s, transform 0.38s var(--ease-smooth) 0.12s, visibility 0.38s;
+    pointer-events: auto;
+  }
+
+  .signature-state-num {
+    font-family: var(--font-primary);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-secondary);
+    margin-bottom: 0.35rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .signature-state-body {
+    font-size: clamp(1.05rem, 4.2vw, 1.25rem);
+    font-weight: 400; /* Crisp regular weight eliminates thin hairline wash-out */
+    line-height: 1.55;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    max-width: 38ch;
   }
 
   .staying-h2 {
@@ -882,6 +963,30 @@ html:not(.js) .invitation-transition-line {
   .page-atelier .footer-copy,
   .page-atelier .footer-colophon {
     font-size: var(--text-xs);
+  }
+}
+
+/* Compact mobile viewports (e.g. 320px iPhone SE 1st gen) */
+@media (max-width: 360px) {
+  .signature-text-col {
+    padding-top: 0.85rem;
+    min-height: 6.5rem;
+  }
+
+  .signature-state-num {
+    font-size: 0.65rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .signature-state-body {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .signature-caption {
+    font-size: 0.65rem;
+    padding-top: 0.35rem;
+    min-height: 1.2rem;
   }
 }
 
